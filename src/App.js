@@ -1,4 +1,4 @@
-import Homepage from './components/homepage/homepage';
+import Homepage from './components/pages/homepage/homepage';
 import './App.css';
 
 const App = () => {
