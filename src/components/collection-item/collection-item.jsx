@@ -1,7 +1,7 @@
 import './collection-item.scss';
 
 const CollectionItem = ({id, name, price, imageUrl}) => {
-    console.log(id, name);
+    
     return (
         <div className="collection-item">
             <div className="image" style={{
