@@ -5,7 +5,7 @@ import './directory.scss';
 
 const Directory = () => {
     
-    const [sections, setSections] = useState(
+    const [sections] = useState(
         [
             {
                 title: 'hats',
