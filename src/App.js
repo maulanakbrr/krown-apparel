@@ -24,20 +24,35 @@ class App extends Component {
 
   componentDidMount() {
     // change the users were signed in, signed out or users change 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged( async user => {
-      this.setState({ currentUser: user });
-      createUserProfileDocument(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {
+      if (userAuth){
+        const userRef = await createUserProfileDocument(userAuth);
+        
+        userRef.onSnapshot( snapShot => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          })
+        });
+
+        
+      }
+
+      this.setState({currentUser: userAuth});
       
     });
     
   };
 
+  // if user sign out, run usubscribeFromAuth function
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
 
   render(){
-    console.log(this.state.currentUser);
+    console.log(this.state);
     return (
       <div>
         <Header currentUser={this.state.currentUser}/>

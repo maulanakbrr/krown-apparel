@@ -13,6 +13,10 @@ const config = {
     appId: "1:621237047345:web:e6451d5da534b82be00510",
     measurementId: "G-273RL01E6Q"
 }
+
+// function to creates user and store to firestore/users
+// if data is exists, just pass data
+// if it's not, create and store to firestore
 export const createUserProfileDocument = async(userAuth, additionalData) => {
     if (!userAuth) return;
 
@@ -20,7 +24,8 @@ export const createUserProfileDocument = async(userAuth, additionalData) => {
 
     const snapshot = await userRef.get();
 
-    console.log(snapshot);
+    // console.log(snapshot);
+    // console.log(userRef);
 
     if (!snapshot.exists) {
         const { displayName, email } = userAuth;
@@ -41,12 +46,13 @@ export const createUserProfileDocument = async(userAuth, additionalData) => {
     return userRef;
 }
 
-
+// init firebase base my config
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
+// create google auth to sign in with google
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 googleProvider.setCustomParameters({prompt: 'select_account'});
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
