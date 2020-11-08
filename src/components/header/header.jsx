@@ -6,6 +6,9 @@ import { auth } from '../../firebase/firebase.utils';
 
 import CartIcon from '../cart-icon/cart-icon';
 import CartDropdown from '../cart-dropdown/cart-dropdown';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { selectCartHidden } from '../../redux/cart/cart.selectors';
 
 import './header.scss';
 
@@ -37,9 +40,10 @@ const Header = ({currentUser, hidden}) => {
     );
 }
 
-const mapStateToProps = ({user: {currentUser}, cart: {hidden}}) => ({
-    currentUser,
-    hidden
+// createStructuredSelector helps us to prevent pass many arguments into our props
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+    hidden: selectCartHidden
 });
 
 export default connect(mapStateToProps)(Header);
