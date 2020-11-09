@@ -2,11 +2,11 @@ import { Component } from 'react';
 import { Route, Switch, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import HomePage from './components/pages/homepage/homepage';
-import ShopPage from './components/pages/shop/shop';
+import HomePage from './pages/homepage/homepage';
+import ShopPage from './pages/shop/shop';
 import Header from './components/header/header';
-import SignInAndSignUpPage from './components/pages/sign-in-and-sign-up/sign-in-and-sign-up';
-import CheckoutPage from './components/pages/checkout/checkout';
+import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
+import CheckoutPage from './pages/checkout/checkout';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
