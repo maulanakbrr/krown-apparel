@@ -5,7 +5,7 @@ import CollectionItem from '../collection-item/collection-item';
 import './collection-preview.scss';
 
 const CollectionPreview = ({title, items, match, history, routeName}) => {
-    console.log(match)
+    
     return (
         <div className="collection-preview">
             <h1 className="title" >
