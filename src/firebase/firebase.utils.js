@@ -24,7 +24,7 @@ export const createUserProfileDocument = async(userAuth, additionalData) => {
 
     const snapshot = await userRef.get();
 
-    // console.log(snapshot);
+    // console.log(snapshot.data());
     // console.log(userRef);
 
     if (!snapshot.exists) {
@@ -44,6 +44,44 @@ export const createUserProfileDocument = async(userAuth, additionalData) => {
     }
 
     return userRef;
+}
+
+export const converSelectionSnapshotToMap = collections => {
+    const transformedCollection = collections.docs.map( doc => {
+        const { title, items } = doc.data();
+
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id: doc.id,
+            title,
+            items
+        };
+    });
+
+    return transformedCollection.reduce( (acc, collection) => {
+        acc[collection.title.toLowerCase()] = collection;
+        return acc;
+    }, {});
+};
+
+// create collections collection on firestore, one time running
+export const addCollectionAndDocuments = async ( collectionKey, objectsToAdd) => {
+    const collectionRef = firestore.collection(collectionKey);
+    // console.log(collectionRef);
+
+    // create write batch to set datas
+    const batch = firestore.batch();
+    objectsToAdd.forEach( obj => {
+        // get the doc at an empty string and create new idea for the doc
+        const newDocRef = collectionRef.doc();
+        
+        // set all datas together with batch
+        batch.set(newDocRef, obj);
+    });
+
+    // commit batch
+    return await batch.commit();
+
 }
 
 // init firebase base my config
