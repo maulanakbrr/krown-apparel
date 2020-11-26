@@ -24,9 +24,6 @@ export const createUserProfileDocument = async(userAuth, additionalData) => {
 
     const snapshot = await userRef.get();
 
-    // console.log(snapshot.data());
-    // console.log(userRef);
-
     if (!snapshot.exists) {
         const { displayName, email } = userAuth;
         const createdAt = new Date();
@@ -64,6 +61,15 @@ export const convertSelectionSnapshotToMap = collections => {
     }, {});
 };
 
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = auth.onAuthStateChanged( userAuth => {
+            unsubscribe();
+            resolve(userAuth);
+        }, reject)
+    })
+};
+
 // create collections collection on firestore, one time running
 export const addCollectionAndDocuments = async ( collectionKey, objectsToAdd) => {
     const collectionRef = firestore.collection(collectionKey);
@@ -91,7 +97,7 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 // create google auth to sign in with google
-const googleProvider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 googleProvider.setCustomParameters({prompt: 'select_account'});
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
