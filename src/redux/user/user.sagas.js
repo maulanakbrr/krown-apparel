@@ -49,13 +49,14 @@ export function* signInWithEmail({payload: {email, password}}) {
 export function* signUp({payload: {displayName, email, password}}) {
     try {
         const { user } = yield auth.createUserWithEmailAndPassword(email, password);
-        yield put(signUpSuccess({user, additionalData: {displayName}}));
+        yield put(signUpSuccess({ user, additionalData: { displayName } }));
     } catch (error) {
         yield put(signUpFailure(error.message));
     }
 }
 
-export function* signInAfterSignUp({payload: {user, additionalData}}) {
+export function* signInAfterSignUp({ payload: { user, additionalData } }) {
+    console.log(user, additionalData);
     yield getSnapshotFromUserAuth(user, additionalData);
 }
 
