@@ -10,7 +10,7 @@ import CheckoutPage from './pages/checkout/checkout';
 
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
-import './App.css';
+import './App.scss';
 
 
 const App = ({checkUserSession, currentUser}) => {
